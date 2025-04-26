@@ -1,0 +1,16 @@
+include(FetchContent)
+FetchContent_Declare(
+  cpptrace
+  GIT_REPOSITORY https://github.com/jeremy-rifkin/cpptrace.git
+  GIT_TAG        v0.8.2 # <HASH or TAG>
+)
+FetchContent_MakeAvailable(cpptrace)
+
+if(WIN32)
+  add_custom_command(
+    TARGET {project_name} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:cpptrace::cpptrace>
+    $<TARGET_FILE_DIR:{project_name}>
+  )
+endif()

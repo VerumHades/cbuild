@@ -1,0 +1,15 @@
+FetchContent_Declare(
+  lua
+  URL https://www.lua.org/ftp/lua-5.4.7.tar.gz
+  GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable(lua)
+
+# Locate all .c files in the Lua source directory
+file(GLOB LUA_SOURCES ${lua_SOURCE_DIR}/src/*.c)
+
+# Create the library target
+add_library(lua STATIC ${LUA_SOURCES})
+
+# Include the Lua headers
+target_include_directories(lua PUBLIC ${lua_SOURCE_DIR}/src)

@@ -1,0 +1,14 @@
+{
+  "glfw": { "link": "glfw" },
+  "glm": { "link": "glm::glm" },
+  "freetype": { "link": "freetype" },
+  "cpptrace": { "link": "cpptrace::cpptrace" },
+  "tinyxml2": { "link": "tinyxml2" },
+  "assimp": { "link": "assimp" },
+  "lua": { "link": "lua" },
+  "glad": { "link": "glad" },
+  "stb_image": {},
+  "stb_image_write": {},
+  "FastNoiseLite": {},
+  "opengl": { "link": "OpenGL::GL" }
+}

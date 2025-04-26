@@ -1,0 +1,1 @@
+add_library(tinyxml2 external/src/tinyxml2.cpp)
