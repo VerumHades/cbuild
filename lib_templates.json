@@ -10,5 +10,6 @@
   "stb_image": {},
   "stb_image_write": {},
   "FastNoiseLite": {},
+  "raylib": { "link": "raylib raygui LDtkLoader::LDtkLoader fmt" },
   "opengl": { "link": "OpenGL::GL" }
 }
