@@ -73,7 +73,7 @@ if args.remake:
     print("Remaking...")
     os_command(
         f"cmake {root_directory} -DCMAKE_BUILD_TYPE={build_type} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON {suffixus}",
-        f"cmake {root_directory} -DCMAKE_COLOR_MAKEFILE=ON -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE={build_type} {suffixus}"
+        f"cmake {root_directory} -DCMAKE_COLOR_MAKEFILE=ON -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE={build_type} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  {suffixus}"
     )
 
 os.chdir(root_directory)
