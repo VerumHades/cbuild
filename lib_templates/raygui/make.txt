@@ -1,0 +1,14 @@
+set(BUILD_RAYGUI_EXAMPLES OFF CACHE BOOL "Disable raygui examples" FORCE)
+
+FetchContent_Declare(raygui
+    GIT_REPOSITORY https://github.com/raysan5/raygui.git
+    GIT_TAG        4.0
+    GIT_SHALLOW    TRUE
+    GIT_PROGRESS   TRUE
+)
+FetchContent_GetProperties(raygui)
+if(NOT raygui_POPULATED)
+    FetchContent_Populate(raygui)
+    add_subdirectory(${raygui_SOURCE_DIR}/projects/CMake raygui)
+    target_compile_options(raygui INTERFACE -w)
+endif()

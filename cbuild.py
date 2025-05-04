@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 
-import os, platform, argparse, shutil, time, subprocess
+import os, platform, argparse, shutil, time, subprocess,sys,json
 from lib.autopath import add_to_path
 from lib.cmakebuilder import generate
 
@@ -28,6 +28,14 @@ script_directory = os.path.dirname(os.path.abspath(__file__))  # Directory where
 args = parser.parse_args()
 root_directory = os.getcwd()
 
+
+if len(sys.argv) == 1:
+    with open("cbuild.json", "r") as f:
+        loaded = json.loads(f.read())
+        if "executable" in loaded:
+            args.build_type = "Release"
+            args.autorun = loaded["executable"]
+
 if args.add_to_path:
     add_to_path(script_directory)
     exit()
@@ -35,7 +43,6 @@ if args.add_to_path:
 if args.build_makefile:
     generate(root_directory)
     exit()
-
 
 build_type = args.build_type
 build_directory = os.path.join("build", build_type)
@@ -68,6 +75,9 @@ def os_command(linux,windows, prefix = ""):
 
 
 suffixus = "-DCMAKE_CXX_FLAGS=\"-DWINDOWS_PACKAGED_BUILD\"" if args.package else ""
+
+if not os.path.exists(os.path.join(build_directory, "CMakeFiles")):
+    args.remake = True
 
 if args.remake:
     print("Remaking...")
@@ -115,6 +125,10 @@ if args.package:
     print(f"Time to package: {elapsed_time} seconds")
 
 if args.autorun is not None:
+    if not os.path.exists(os.path.join(root_directory, "cbuild.json"), "w"):
+        with open("cbuild.json", "w") as f:
+            f.write(json.dumps({"executable": args.autorun}))
+    
     os_command(
         f"./{build_directory}/{args.autorun}",
         f"{build_directory}\\{args.autorun}.exe",

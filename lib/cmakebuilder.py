@@ -36,6 +36,24 @@ def setup_library(name, path = os.getcwd()):
     include_path = join(lib_path,"include")
     if os.path.exists(include_path):
         shutil.copytree(include_path, join(path, "external", "include"), dirs_exist_ok=True)
+    
+    main_templates = join(lib_path,"main_templates")
+    if(os.path.exists(main_templates)):
+        selection = ["None"]
+        
+        for entry in os.listdir(main_templates):
+            full_path = os.path.join(main_templates, entry)
+            if os.path.isfile(full_path):
+                selection.append(entry)
+
+        selected = questionary.select(
+            "This library provides templates for main.cpp (Choose None to not apply any template): ",
+            choices=selection,
+            default="None"
+        ).ask()
+        
+        if(selected != "None"):
+            shutil.copy2(join(main_templates, selected), join(path, "src" ,"main.cpp"))
 
     print(f"Setup library: {name}")
     return (make_string, link_name)
@@ -92,6 +110,8 @@ def generate(path = os.getcwd()):
         libraries=libraries,
         library_links=f"target_link_libraries({executable_name} PRIVATE {library_links})"
     )
+    
+    open(join(path,"cbuild.json"), "w").write(json.dumps({"executable": executable_name}))
 
     output_path = os.path.join(path, "CMakeLists.txt")
     with open(output_path, "w") as f:

@@ -9,6 +9,17 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include(FetchContent)
+# Utility function to fetch and silence warnings
+function(add_git_dependency libName gitURL gitTag)
+    FetchContent_Declare(${{libName}}
+        GIT_REPOSITORY ${{gitURL}}
+        GIT_TAG        ${{gitTag}}
+        GIT_SHALLOW    TRUE
+        GIT_PROGRESS   TRUE
+    )
+    FetchContent_MakeAvailable(${{libName}})
+    target_compile_options(${{libName}} PRIVATE -w)
+endfunction()
 
 include_directories(${{CMAKE_SOURCE_DIR}}/include)
 include_directories(${{CMAKE_SOURCE_DIR}}/external/include)

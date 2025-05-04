@@ -1,0 +1,1 @@
+add_git_dependency(LDtkLoader https://github.com/Madour/LDtkLoader.git 1.5.3.1)
