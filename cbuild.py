@@ -76,7 +76,8 @@ def os_command(linux,windows, prefix = ""):
 
 suffixus = "-DCMAKE_CXX_FLAGS=\"-DWINDOWS_PACKAGED_BUILD\"" if args.package else ""
 
-if not os.path.exists(os.path.join(build_directory, "CMakeFiles")):
+if not os.path.exists(os.path.join(root_directory, build_directory, "CMakeFiles")):
+    print(os.path.join(build_directory, "CMakeFiles"))
     args.remake = True
 
 if args.remake:
@@ -125,7 +126,7 @@ if args.package:
     print(f"Time to package: {elapsed_time} seconds")
 
 if args.autorun is not None:
-    if not os.path.exists(os.path.join(root_directory, "cbuild.json"), "w"):
+    if not os.path.exists(os.path.join(root_directory, "cbuild.json")):
         with open("cbuild.json", "w") as f:
             f.write(json.dumps({"executable": args.autorun}))
     
