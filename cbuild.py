@@ -83,8 +83,8 @@ if not os.path.exists(os.path.join(root_directory, build_directory, "CMakeFiles"
 if args.remake:
     print("Remaking...")
     os_command(
-        f"cmake {root_directory} -DCMAKE_BUILD_TYPE={build_type} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON {suffixus}",
-        f"cmake {root_directory} -DCMAKE_COLOR_MAKEFILE=ON -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE={build_type} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  {suffixus}"
+        f"cmake \"{root_directory}\" -DCMAKE_BUILD_TYPE={build_type} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON {suffixus}",
+        f"cmake \"{root_directory}\" -DCMAKE_COLOR_MAKEFILE=ON -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE={build_type} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  {suffixus}"
     )
 
 os.chdir(root_directory)
@@ -94,7 +94,7 @@ prefix = "gdb -ex run " if args.with_debuger else ""
 
 start_time = time.time()
 
-build_exit_code = command(f"cmake --build {build_directory} -j 8")
+build_exit_code = command(f"cmake --build \"{build_directory}\" -j 8")
 if build_exit_code != 0:
     print("Build failed.")
     exit()
@@ -119,7 +119,7 @@ if args.package:
                 line = line.replace("-","_")
             file.write(line)
 
-    os.system(f"cpack --config {file_path}")
+    os.system(f"cpack --config \"{file_path}\"")
 
     end_time = time.time()
     elapsed_time = end_time - start_time
