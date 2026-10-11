@@ -1,1 +1,7 @@
-cbuild.py $@
+#!/usr/bin/env bash
+
+# Resolve physical directory of the script, following any symlinks
+SCRIPT_DIR="$(cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" && pwd)"
+
+# Execute cbuild.py using the virtual environment's Python interpreter
+exec "${SCRIPT_DIR}/.venv/bin/python" "${SCRIPT_DIR}/cbuild.py" "$@"
