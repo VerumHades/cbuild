@@ -115,7 +115,10 @@ print(f"Platform is: {platform.system().lower()}")
 
 def command(cmd):
     print(f"Running command: {cmd}")
-    return os.system(cmd)
+    return subprocess.run(
+        f'cmake --build "{build_directory}" -j 8',
+        shell=True
+    ).returncode
 
 
 def os_command(linux, windows, prefix=""):
